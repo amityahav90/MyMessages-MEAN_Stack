@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 export class AuthService {
   private isAuthenticated = false;
   private token: string;
-  private tokenTimer: NodeJS.Timer;
+  private tokenTimer: any;
   private userId: string;
   private authStatusListener = new Subject<boolean>();
 
@@ -59,6 +59,8 @@ export class AuthService {
           this.saveAuthData(this.token, expirationDate, this.userId);
           this.router.navigate(['/']);
         }
+      }, error => {
+        this.authStatusListener.next(false);
       });
   }
 
